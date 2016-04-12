@@ -96,4 +96,24 @@ public class Bank {
         return depositFunds(accountB, ammount);
     }
 
+    public boolean issueDebitCard(int accountID){
+        Account account = database.getAccount(accountID);
+        account.issueDebitCard();
+        return true;
+    }
+
+    public boolean changeDebitPin(int accountID, int currentPin, int requestedPin){
+        Account account = database.getAccount(accountID);
+        boolean toReturn;
+        toReturn = account.changeDebitPin(currentPin, requestedPin);
+        return toReturn;
+    }
+
+    public boolean setDebitPin(int accountID, int pinToSet){
+        Account account = database.getAccount(accountID);
+        boolean toReturn;
+        toReturn = account.setDebitPin(pinToSet);
+        return toReturn;
+    }
+
 }

@@ -10,6 +10,7 @@ public class Account {
     private Double Balance;
     private int accountID;
     private List<Client> clientList;
+    private int pin;
 
     public Account(double balance) {
         Balance = balance;
@@ -50,6 +51,31 @@ public class Account {
     public boolean withdraw(double ammount) {
         Balance -= ammount;
         return true;
+    }
+
+    public int issueDebitCard(){
+        pin = 0; //sets pin to invalid call setDebit to make valid
+        return pin;
+    }
+
+    public boolean setDebitPin(int pinToSet){
+        if(pinToSet>=1000 && pinToSet<=9999){
+            pin = pinToSet;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean changeDebitPin(int currentPin, int pinToSet){
+        if(currentPin == pin){
+            pin = pinToSet;
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }
