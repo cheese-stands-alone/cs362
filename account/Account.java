@@ -11,12 +11,14 @@ public class Account {
     private int accountID;
     private List<Client> clientList;
     private int pin;
+    private int interest
 
     public Account(double balance) {
         Balance = balance;
         Random random = new Random();
         accountID = random.nextInt(Integer.MAX_VALUE + 1);
         clientList = new ArrayList<Client>();
+        interest = 1.01;
     }
 
     public Account() {
@@ -53,29 +55,36 @@ public class Account {
         return true;
     }
 
-    public int issueDebitCard(){
+    public int issueDebitCard() {
         pin = 0; //sets pin to invalid call setDebit to make valid
         return pin;
     }
 
-    public boolean setDebitPin(int pinToSet){
-        if(pinToSet>=1000 && pinToSet<=9999){
+    public boolean setDebitPin(int pinToSet) {
+        if (pinToSet >= 1000 && pinToSet <= 9999) {
             pin = pinToSet;
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public boolean changeDebitPin(int currentPin, int pinToSet){
-        if(currentPin == pin){
+    public boolean changeDebitPin(int currentPin, int pinToSet) {
+        if (currentPin == pin) {
             pin = pinToSet;
             return true;
-        }
-        else{
+        } else {
             return false;
         }
+    }
+
+    public void calculateInterest() {
+        Balance *= interest;
+    }
+
+    public boolean deleteDebit() {
+        pin = 0;
+        return true;
     }
 
 }

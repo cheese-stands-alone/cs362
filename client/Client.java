@@ -34,6 +34,8 @@ public class Client {
         return true;
     }
 
+    public List<Account> getAccounts() {return accountList;}
+
     public boolean containsAccounts() {
         return !accountList.isEmpty();
     }

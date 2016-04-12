@@ -3,6 +3,7 @@ package com.cs362;
 import com.cs362.account.Account;
 import com.cs362.client.Client;
 import com.cs362.db.Database;
+import com.cs362.Statement;
 
 public class Bank {
     Database database;
@@ -96,24 +97,46 @@ public class Bank {
         return depositFunds(accountB, ammount);
     }
 
-    public boolean issueDebitCard(int accountID){
+    public boolean issueDebitCard(int accountID) {
         Account account = database.getAccount(accountID);
         account.issueDebitCard();
         return true;
     }
 
-    public boolean changeDebitPin(int accountID, int currentPin, int requestedPin){
+    public boolean changeDebitPin(int accountID, int currentPin, int requestedPin) {
         Account account = database.getAccount(accountID);
         boolean toReturn;
         toReturn = account.changeDebitPin(currentPin, requestedPin);
         return toReturn;
     }
 
-    public boolean setDebitPin(int accountID, int pinToSet){
+    public boolean setDebitPin(int accountID, int pinToSet) {
         Account account = database.getAccount(accountID);
         boolean toReturn;
         toReturn = account.setDebitPin(pinToSet);
         return toReturn;
+    }
+
+    public boolean calculateInterest(int accountID) {
+        Account account = database.getAccount(accountID);
+        accont.calculateInterest();
+        return database.updateAccount(account);
+    }
+
+    public Statement calculateInterest(int clientID) {
+        Client client = database.getClient(clientID);
+        List<Account> list = client.getAccounts();
+        Statement statement = new Statement();
+        for (Account account : list) {
+            statement.addAccount(account);
+        }
+        return statement;
+    }
+
+    public boolean deleteDebit(int accountID) {
+        Account account = database.getAccount(accountID);
+        account.deleteDebit();
+        return database.updateAccount(account);
     }
 
 }
