@@ -1,6 +1,7 @@
 package com.cs362;
 
 import com.cs362.account.Account;
+import com.cs362.account.RecurringPayment;
 import com.cs362.client.Client;
 import com.cs362.db.Database;
 import com.cs362.Statement;
@@ -17,7 +18,7 @@ public class Bank {
         return database.putClient(client);
     }
 
-    public boolean delieteClient(int clientID) {
+    public boolean deleteClient(int clientID) {
         Client client;
         try {
             client = database.getClient(clientID);
@@ -31,7 +32,7 @@ public class Bank {
     }
 
     public boolean addAccount(int clientID, String type) {
-        //TODO for more accout types
+        //TODO for more account types
         Client client;
         try {
             client = database.getClient(clientID);
@@ -97,6 +98,21 @@ public class Bank {
         return depositFunds(accountB, ammount);
     }
 
+    public boolean setRecurringPayment(int accountID1, double payment, int accountID2) {
+    	Account account = database.getAccount(accountID1);
+	Account account2 = database.getAccount(accountID2);
+	if(account2 == null) return false;
+	RecurringPayment rp = new RecurringPayment(accountID2, payment);
+	account.addRecurringPayment(rp);
+	return database.updateAccount(account);
+    }
+
+    public boolean cancelRecurringPayment(int accountID, int rpID) {
+    	Account account = database.getAccount(accountID);
+	account.deleteRecurringPayment(rpID);
+	return database.updateAccount(account);
+    }
+
     public boolean issueDebitCard(int accountID) {
         Account account = database.getAccount(accountID);
         account.issueDebitCard();
@@ -137,6 +153,21 @@ public class Bank {
         Account account = database.getAccount(accountID);
         account.deleteDebit();
         return database.updateAccount(account);
+    }
+
+    public boolean toggleFreeze(int clientID) {
+    	Client client = database.getClient(clientID);
+	client.toggleFreezeStatus();
+	boolean f = client.getFreezeStatus();
+	List<Integer> list = client.getAccounts();
+	int size = list.size();
+	int n = 0;
+	for(n < size) {
+		Account account = database.getAccount(list.get(n));
+		account.setFreeze(f);
+		database.updateAccount(account);
+	}
+	return database.updateClient(client);
     }
 
 }
