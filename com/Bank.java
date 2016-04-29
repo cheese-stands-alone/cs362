@@ -177,11 +177,31 @@ public class Bank {
         return database.updateAccount(acc);
     }
 
+    public boolean payLoan(int cID, int lID, double payment) {
+    	Client c = database.getClient(cID);
+	if(!c.LoanPayment(lID, payment)) return false;
+	return database.updateClient(c);
+    }
+
     public double calculateInterestOnLoan(int accountID, int loanID){
         Account acc = database.getAccount(accountID);
         Loan toCalc = acc.getLoanFromID(loanID);
 
         return toCalc.calculateIntrestOnLoan();
+    }
+
+    public double calculateFees(int cID) {
+    	Client c = database.getClient(cID);
+	ArrayList<Integer> accL = c.getAccounts();
+	int i = 0;
+	double total = 0.0;
+	Account a;
+	while(i < accL.size()) {
+		a = database.getAccount(accL.get(i));
+		total += a.calculatePayments();
+		i++;
+	}
+	return total;
     }
 
     public boolean transferAccount(int clientID1, int clientID2, int accID){

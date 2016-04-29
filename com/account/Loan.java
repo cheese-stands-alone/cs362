@@ -10,7 +10,7 @@ public class Loan {
     public double loanInterest;
     public double loanAmount;
 
-    public Loan(int ammount, double rate){
+    public Loan(double ammount, double rate){
         Random random = new Random();
         loanInterest = rate;
         loanAmount = ammount;

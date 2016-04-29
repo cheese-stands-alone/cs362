@@ -107,6 +107,16 @@ public class Account {
         return true;
     }
 
+    public double calculatePayments() {
+    	int i = 0;
+	int sum = 0.0;
+	while(i < rpList.size()) {
+		sum += rpList.get(i).getPayment();
+		i++;
+	}
+	return sum;
+    }
+
     public int issueDebitCard() {
         if (freezeStatus) return -1;
         pin = 0; //sets pin to invalid call setDebit to make valid

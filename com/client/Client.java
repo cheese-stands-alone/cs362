@@ -77,4 +77,11 @@ public class Client {
         db.putClient(toTransferTo);
         return true;
     }
+
+    public boolean LoanPayment(int lID, double payment) {
+    	Loan l = getLoanByID(lID);
+	if(!l.receivePayment(payment)) return false;
+	if(l.getLoanAmount() == 0) LoanList.remove(l);
+	return true;
+    }
 }
