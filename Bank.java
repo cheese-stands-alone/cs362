@@ -1,7 +1,6 @@
 package com.cs362;
 
 import com.cs362.account.Account;
-import com.cs362.account.RecurringPayment;
 import com.cs362.client.Client;
 import com.cs362.db.Database;
 import com.cs362.Statement;
@@ -102,8 +101,7 @@ public class Bank {
     	Account account = database.getAccount(accountID1);
 	Account account2 = database.getAccount(accountID2);
 	if(account2 == null) return false;
-	RecurringPayment rp = new RecurringPayment(accountID2, payment);
-	account.addRecurringPayment(rp);
+	account.addRecurringPayment(payment, accountID2);
 	return database.updateAccount(account);
     }
 

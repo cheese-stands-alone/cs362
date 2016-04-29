@@ -72,8 +72,13 @@ public class Account {
         return true;
     }
 
-    public boolean addRecurringPayment(recurringPayment r) {
+    public boolean addRecurringPayment(double amount, int aID) {
         if(freezeStatus) return false;
+	int size = rpList.size();
+	int i = 0;
+	if(size > 0) i = rpList.get(size - 1).getID();
+	i++;
+	RecurringPayment r = new RecurringPayment(aID, amount, i);
 	rpList.add(r);
 	return true;
     }
@@ -87,7 +92,7 @@ public class Account {
 	for(n < s && !done) {
 		ID = rpList.get(n).getID();
 		if(ID == rpID) {
-			rpList.delete(n);
+			rpList.remove(n);
 			done = true;
 		}
 		else n++;
