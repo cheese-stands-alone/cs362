@@ -6,13 +6,8 @@
     </option>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd301d63-5155-4b98-86c0-785698fdf9fc" name="Default" comment="Added methods for iteration 3">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/com/account/Loan.java" />
+    <list default="true" id="cd301d63-5155-4b98-86c0-785698fdf9fc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/Bank.java" afterPath="$PROJECT_DIR$/com/Bank.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/Run.java" afterPath="$PROJECT_DIR$/com/Run.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/account/Account.java" afterPath="$PROJECT_DIR$/com/account/Account.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com/client/Client.java" afterPath="$PROJECT_DIR$/com/client/Client.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/cs362/.idea/misc.xml" afterPath="$PROJECT_DIR$/out/production/cs362/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/cs362/.idea/workspace.xml" afterPath="$PROJECT_DIR$/out/production/cs362/.idea/workspace.xml" />
     </list>
@@ -584,6 +579,14 @@
       <updated>1461886828563</updated>
       <workItem from="1461886832257" duration="1548000" />
     </task>
+    <task id="LOCAL-00001" summary="Added methods for iteration 3">
+      <created>1461902568162</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1461902568162</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
