@@ -1,5 +1,7 @@
 package com.account;
 
+import com.account.RecurringPayment;
+
 import com.client.Client;
 import com.db.Database;
 
