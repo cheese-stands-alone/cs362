@@ -1,7 +1,7 @@
-package com.cs362.client;
+package com.client;
 
-import com.cs362.account.Account;
-import com.cs362.db.Database;
+import com.account.Account;
+import com.db.Database;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +12,15 @@ public class Client {
     private int clientID;
     private List<Integer> accountList;
     private boolean freezeStatus;
+    private Database db;
 
-    public Client() {
+    public Client(Database data) {
         name = "";
         Random random = new Random();
         clientID = random.nextInt(Integer.MAX_VALUE + 1);
         accountList = new ArrayList<Integer>();
 	freezeStatus = false;
+        db = data;
     }
 
     public Client(String name) {
@@ -54,7 +56,8 @@ public class Client {
 
     public boolean removeAccount(Account account) {
         if(freezeStatus) return false;
-        return accountList.remove(account.getAccountID());
+        accountList.remove(account.getAccountID());
+        return true;
     }
 
     public boolean toogleFreezeStatus() {

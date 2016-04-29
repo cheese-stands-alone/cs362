@@ -1,9 +1,7 @@
-package com.cs362.account;
+package com.account;
 
-import com.cs362.account.RecurringPayment;
-
-import com.cs362.client.Client;
-import com.cs362.db.Database;
+import com.client.Client;
+import com.db.Database;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +14,18 @@ public class Account {
     private List<RecurringPayment> rpList;
     private boolean freezeStatus;
     private int pin;
-    private int interest;
+    private double interest;
+    private Database db;
 
-    public Account(double balance) {
+    public Account(double balance, Database data) {
         Balance = balance;
         Random random = new Random();
         accountID = random.nextInt(Integer.MAX_VALUE + 1);
         clientList = new ArrayList<Integer>();
-	rpList = new ArrayList<RecurringPayment>();
-	freezeStatus = false;
+        rpList = new ArrayList<RecurringPayment>();
+        freezeStatus = false;
         interest = 1.01;
+        db = data;
     }
 
     public Account() {
@@ -33,8 +33,8 @@ public class Account {
         Random random = new Random();
         accountID = random.nextInt(Integer.MAX_VALUE + 1);
         clientList = new ArrayList<Integer>();
-	rpList = new ArrayList<RecurringPayment>();
-	freezeStatus = false;
+        rpList = new ArrayList<RecurringPayment>();
+        freezeStatus = false;
     }
 
     public double getBalance() {
@@ -46,66 +46,65 @@ public class Account {
     }
 
     public boolean addClient(Client client) {
-        if(freezeStatus) return false;
+        if (freezeStatus) return false;
         clientList.add(client.getClientID());
         return true;
     }
 
     public List<Client> getClientList() {
-    	List<Client> clients = new ArrayList<Client>();
-	for(int i = 0; i < clientList.size(); i++) {
-		Client c = db.getClient(clientList.get(i));
-		clients.add(c);
-	}
-	return clients;
+        List<Client> clients = new ArrayList<Client>();
+        for (int i = 0; i < clientList.size(); i++) {
+            Client c = db.getClient(clientList.get(i));
+            clients.add(c);
+        }
+        return clients;
     }
 
     public boolean deposit(double ammount) {
-        if(freezeStatus) return false;
-	Balance += ammount;
+        if (freezeStatus) return false;
+        Balance += ammount;
         return true;
     }
 
     public boolean withdraw(double ammount) {
-        if(freezeStatus) return false;
+        if (freezeStatus) return false;
         Balance -= ammount;
         return true;
     }
 
-    public boolean addRecurringPayment(recurringPayment r) {
-        if(freezeStatus) return false;
-	rpList.add(r);
-	return true;
+    public boolean addRecurringPayment(RecurringPayment r) {
+        if (freezeStatus) return false;
+        rpList.add(r);
+        return true;
     }
 
     public boolean deleteRecurringPayment(int rpID) {
-        if(freezeStatus) return false;
-	int s = rpList.size();
-	int n = 0;
-	int ID = 0;
-	boolean done = false;
-	for(n < s && !done) {
-		ID = rpList.get(n).getID();
-		if(ID == rpID) {
-			rpList.delete(n);
-			done = true;
-		}
-		else n++;
-	}
-	if(n == s) {
-		return false;
-	}
-	return true;
+        if (freezeStatus) return false;
+        int s = rpList.size();
+        int n = 0;
+        int ID = 0;
+        boolean done = false;
+        while (n<s && !done){
+            ID = rpList.get(n).getID();
+            if (ID == rpID) {
+                rpList.remove(n);
+                done = true;
+            } else n++;
+        }
+        if (n == s) {
+            return false;
+        }
+        return true;
     }
 
     public int issueDebitCard() {
-        if(freezeStatus) return false;
+        if (freezeStatus) return -1;
         pin = 0; //sets pin to invalid call setDebit to make valid
         return pin;
     }
 
     public boolean setDebitPin(int pinToSet) {
-        if(freezeStatus) return false;
+        if (freezeStatus) return false;
         if (pinToSet >= 1000 && pinToSet <= 9999) {
             pin = pinToSet;
             return true;
@@ -115,7 +114,7 @@ public class Account {
     }
 
     public boolean changeDebitPin(int currentPin, int pinToSet) {
-        if(freezeStatus) return false;
+        if (freezeStatus) return false;
         if (currentPin == pin) {
             pin = pinToSet;
             return true;
@@ -129,13 +128,13 @@ public class Account {
     }
 
     public boolean deleteDebit() {
-        if(freezeStatus) return false;
+        if (freezeStatus) return false;
         pin = 0;
         return true;
     }
 
     public boolean setFreeze(boolean f) {
-    	freezeStatus = f;
-	return true;
+        freezeStatus = f;
+        return true;
     }
 }

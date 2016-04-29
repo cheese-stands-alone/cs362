@@ -1,10 +1,12 @@
-package com.cs362;
+package com;
 
-import com.cs362.account.Account;
-import com.cs362.account.RecurringPayment;
-import com.cs362.client.Client;
-import com.cs362.db.Database;
-import com.cs362.Statement;
+import com.account.Account;
+import com.account.RecurringPayment;
+import com.client.Client;
+import com.db.Database;
+
+import java.util.List;
+import java.util.Random;
 
 public class Bank {
     Database database;
@@ -55,7 +57,7 @@ public class Bank {
     public boolean deleteAccount(int accountID) {
         Account account = database.getAccount(accountID);
         for (Client client : account.getClientList()) {
-            if (!client.removAccount(account)) {
+            if (!client.removeAccount(account)) {
                 return false;
             }
             if (!database.updateClient(client)) {
@@ -99,18 +101,18 @@ public class Bank {
     }
 
     public boolean setRecurringPayment(int accountID1, double payment, int accountID2) {
-    	Account account = database.getAccount(accountID1);
-	Account account2 = database.getAccount(accountID2);
-	if(account2 == null) return false;
-	RecurringPayment rp = new RecurringPayment(accountID2, payment);
-	account.addRecurringPayment(rp);
-	return database.updateAccount(account);
+        Account account = database.getAccount(accountID1);
+        Account account2 = database.getAccount(accountID2);
+        if (account2 == null) return false;
+        RecurringPayment rp = new RecurringPayment(accountID2, payment, (new Random()).nextInt());
+        account.addRecurringPayment(rp);
+        return database.updateAccount(account);
     }
 
     public boolean cancelRecurringPayment(int accountID, int rpID) {
-    	Account account = database.getAccount(accountID);
-	account.deleteRecurringPayment(rpID);
-	return database.updateAccount(account);
+        Account account = database.getAccount(accountID);
+        account.deleteRecurringPayment(rpID);
+        return database.updateAccount(account);
     }
 
     public boolean issueDebitCard(int accountID) {
@@ -135,11 +137,11 @@ public class Bank {
 
     public boolean calculateInterest(int accountID) {
         Account account = database.getAccount(accountID);
-        accont.calculateInterest();
+        account.calculateInterest();
         return database.updateAccount(account);
     }
 
-    public Statement calculateInterest(int clientID) {
+    public Statement getStatement(int clientID) {
         Client client = database.getClient(clientID);
         List<Account> list = client.getAccounts();
         Statement statement = new Statement();
@@ -156,18 +158,18 @@ public class Bank {
     }
 
     public boolean toggleFreeze(int clientID) {
-    	Client client = database.getClient(clientID);
-	client.toggleFreezeStatus();
-	boolean f = client.getFreezeStatus();
-	List<Integer> list = client.getAccounts();
-	int size = list.size();
-	int n = 0;
-	for(n < size) {
-		Account account = database.getAccount(list.get(n));
-		account.setFreeze(f);
-		database.updateAccount(account);
-	}
-	return database.updateClient(client);
+        Client client = database.getClient(clientID);
+        client.toogleFreezeStatus();
+        boolean f = client.getFreezeStatus();
+        List<Account> list = client.getAccounts();
+        int size = list.size();
+        int n = 0;
+        while (n<size) {
+            Account account = database.getAccount(list.get(n).getAccountID());
+            account.setFreeze(f);
+            database.updateAccount(account);
+        }
+        return database.updateClient(client);
     }
 
 }

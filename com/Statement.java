@@ -1,5 +1,9 @@
-import com.cs362.account.Account;
+package com;
+
+import com.account.Account;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Statement {
     private List<Account> accountList;
