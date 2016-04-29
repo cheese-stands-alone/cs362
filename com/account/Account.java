@@ -20,7 +20,7 @@ public class Account {
     public Account(double balance, Database data) {
         Balance = balance;
         Random random = new Random();
-        accountID = random.nextInt(Integer.MAX_VALUE + 1);
+        accountID = random.nextInt();
         clientList = new ArrayList<Integer>();
         rpList = new ArrayList<RecurringPayment>();
         freezeStatus = false;
@@ -31,7 +31,7 @@ public class Account {
     public Account() {
         Balance = 0.0;
         Random random = new Random();
-        accountID = random.nextInt(Integer.MAX_VALUE + 1);
+        accountID = random.nextInt();
         clientList = new ArrayList<Integer>();
         rpList = new ArrayList<RecurringPayment>();
         freezeStatus = false;
