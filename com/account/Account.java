@@ -11,6 +11,7 @@ public class Account {
     private Double Balance;
     private int accountID;
     private List<Integer> clientList;
+    private List<Loan> loanList;
     private List<RecurringPayment> rpList;
     private boolean freezeStatus;
     private int pin;
@@ -22,6 +23,7 @@ public class Account {
         Random random = new Random();
         accountID = random.nextInt(Integer.MAX_VALUE + 1);
         clientList = new ArrayList<Integer>();
+        loanList = new ArrayList<Loan>();
         rpList = new ArrayList<RecurringPayment>();
         freezeStatus = false;
         interest = 1.01;
@@ -33,6 +35,7 @@ public class Account {
         Random random = new Random();
         accountID = random.nextInt(Integer.MAX_VALUE + 1);
         clientList = new ArrayList<Integer>();
+        loanList = new ArrayList<Loan>();
         rpList = new ArrayList<RecurringPayment>();
         freezeStatus = false;
     }
@@ -137,4 +140,20 @@ public class Account {
         freezeStatus = f;
         return true;
     }
+
+    public boolean addLoan(int amount, int rate){
+        Loan toAdd = new Loan(amount, rate);
+        loanList.add(toAdd);
+        return true;
+    }
+
+    public Loan getLoanFromID(int loanID){
+        for(int i = 0; i < loanList.size(); i++){
+            Loan temp = loanList.get(i);
+            if(temp.getLoanID() == loanID) return temp;
+        }
+        return null;
+    }
+
+
 }

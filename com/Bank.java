@@ -2,6 +2,7 @@ package com;
 
 import com.account.Account;
 import com.account.RecurringPayment;
+import com.account.Loan;
 import com.client.Client;
 import com.db.Database;
 
@@ -170,6 +171,25 @@ public class Bank {
             database.updateAccount(account);
         }
         return database.updateClient(client);
+    }
+
+    public boolean addLoan(int ammount, int interest, int accountID){
+        Account acc = database.getAccount(accountID);
+        acc.addLoan(ammount, interest);
+        return database.updateAccount(acc);
+    }
+
+    public double calculateInterestOnLoan(int accountID, int loanID){
+        Account acc = database.getAccount(accountID);
+        Loan toCalc = acc.getLoanFromID(loanID);
+
+        return toCalc.calculateIntrestOnLoan();
+    }
+
+    public boolean transferAccount(int clientID1, int clientID2, int accID){
+        Client toTransferFrom = database.getClient(clientID1);
+
+        return toTransferFrom.transferAccount(accID, clientID2);
     }
 
 }

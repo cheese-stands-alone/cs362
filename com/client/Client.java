@@ -26,9 +26,9 @@ public class Client {
     public Client(String name) {
         this.name = name;
         Random random = new Random();
-        clientID = random.nextInt(Integer.MAX_VALUE + 1);
+        clientID = random.nextInt();
         accountList = new ArrayList<Integer>();
-	freezeStatus = false;
+	    freezeStatus = false;
     }
 
     public int getClientID() {
@@ -67,5 +67,14 @@ public class Client {
 
     public boolean getFreezeStatus() {
     	return freezeStatus;
+    }
+
+    public boolean transferAccount(int accID, int clientIDtoTransferTo){
+        Client toTransferTo = db.getClient(clientIDtoTransferTo);
+        Account acc = db.getAccount(accID);
+        removeAccount(acc);
+        toTransferTo.attachAccount(acc);
+        db.putClient(toTransferTo);
+        return true;
     }
 }
