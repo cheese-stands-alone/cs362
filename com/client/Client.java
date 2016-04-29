@@ -17,7 +17,7 @@ public class Client {
     public Client(Database data) {
         name = "";
         Random random = new Random();
-        clientID = random.nextInt(Integer.MAX_VALUE + 1);
+        clientID = random.nextInt();
         accountList = new ArrayList<Integer>();
 	freezeStatus = false;
         db = data;
