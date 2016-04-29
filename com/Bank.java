@@ -1,9 +1,12 @@
-package com.cs362;
+package com;
 
-import com.cs362.account.Account;
-import com.cs362.client.Client;
-import com.cs362.db.Database;
-import com.cs362.Statement;
+import com.account.Account;
+import com.account.Loan;
+import com.client.Client;
+import com.db.Database;
+
+import java.util.List;
+import java.util.Random;
 
 public class Bank {
     Database database;
@@ -54,7 +57,7 @@ public class Bank {
     public boolean deleteAccount(int accountID) {
         Account account = database.getAccount(accountID);
         for (Client client : account.getClientList()) {
-            if (!client.removAccount(account)) {
+            if (!client.removeAccount(account)) {
                 return false;
             }
             if (!database.updateClient(client)) {
@@ -106,9 +109,9 @@ public class Bank {
     }
 
     public boolean cancelRecurringPayment(int accountID, int rpID) {
-    	Account account = database.getAccount(accountID);
-	account.deleteRecurringPayment(rpID);
-	return database.updateAccount(account);
+        Account account = database.getAccount(accountID);
+        account.deleteRecurringPayment(rpID);
+        return database.updateAccount(account);
     }
 
     public boolean issueDebitCard(int accountID) {
@@ -133,11 +136,11 @@ public class Bank {
 
     public boolean calculateInterest(int accountID) {
         Account account = database.getAccount(accountID);
-        accont.calculateInterest();
+        account.calculateInterest();
         return database.updateAccount(account);
     }
 
-    public Statement calculateInterest(int clientID) {
+    public Statement getStatement(int clientID) {
         Client client = database.getClient(clientID);
         List<Account> list = client.getAccounts();
         Statement statement = new Statement();
@@ -154,18 +157,37 @@ public class Bank {
     }
 
     public boolean toggleFreeze(int clientID) {
-    	Client client = database.getClient(clientID);
-	client.toggleFreezeStatus();
-	boolean f = client.getFreezeStatus();
-	List<Integer> list = client.getAccounts();
-	int size = list.size();
-	int n = 0;
-	for(n < size) {
-		Account account = database.getAccount(list.get(n));
-		account.setFreeze(f);
-		database.updateAccount(account);
-	}
-	return database.updateClient(client);
+        Client client = database.getClient(clientID);
+        client.toogleFreezeStatus();
+        boolean f = client.getFreezeStatus();
+        List<Account> list = client.getAccounts();
+        int size = list.size();
+        int n = 0;
+        while (n<size) {
+            Account account = database.getAccount(list.get(n).getAccountID());
+            account.setFreeze(f);
+            database.updateAccount(account);
+        }
+        return database.updateClient(client);
+    }
+
+    public boolean addLoan(int ammount, int interest, int accountID){
+        Account acc = database.getAccount(accountID);
+        acc.addLoan(ammount, interest);
+        return database.updateAccount(acc);
+    }
+
+    public double calculateInterestOnLoan(int accountID, int loanID){
+        Account acc = database.getAccount(accountID);
+        Loan toCalc = acc.getLoanFromID(loanID);
+
+        return toCalc.calculateIntrestOnLoan();
+    }
+
+    public boolean transferAccount(int clientID1, int clientID2, int accID){
+        Client toTransferFrom = database.getClient(clientID1);
+
+        return toTransferFrom.transferAccount(accID, clientID2);
     }
 
 }

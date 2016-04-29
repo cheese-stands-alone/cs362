@@ -1,7 +1,7 @@
-package com.cs362.db;
+package com.db;
 
-import com.cs362.account.*;
-import com.cs362.client.*;
+import com.account.*;
+import com.client.*;
 
 import java.util.HashMap;
 
@@ -66,10 +66,10 @@ public class Database {
         return false;
     }
 
-    public Client getClient(int clientID) throws Exception {
+    public Client getClient(int clientID) {
         if (clientlist.containsKey(clientID)) {
             return clientlist.get(clientID);
         }
-        throw new Exception("Client not in database");
+        return null;
     }
 }

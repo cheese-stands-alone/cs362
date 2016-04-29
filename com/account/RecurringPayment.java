@@ -1,4 +1,4 @@
-package com.cs362.account;
+package com.account;
 
 
     public class RecurringPayment {
