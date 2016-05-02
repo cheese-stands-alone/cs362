@@ -6,7 +6,6 @@ import com.client.Client;
 import com.db.Database;
 
 import java.util.List;
-import java.util.Random;
 
 public class Bank {
     Database database;
@@ -101,11 +100,11 @@ public class Bank {
     }
 
     public boolean setRecurringPayment(int accountID1, double payment, int accountID2) {
-    	Account account = database.getAccount(accountID1);
-	Account account2 = database.getAccount(accountID2);
-	if(account2 == null) return false;
-	account.addRecurringPayment(payment, accountID2);
-	return database.updateAccount(account);
+        Account account = database.getAccount(accountID1);
+        Account account2 = database.getAccount(accountID2);
+        if (account2 == null) return false;
+        account.addRecurringPayment(payment, accountID2);
+        return database.updateAccount(account);
     }
 
     public boolean cancelRecurringPayment(int accountID, int rpID) {
@@ -163,7 +162,7 @@ public class Bank {
         List<Account> list = client.getAccounts();
         int size = list.size();
         int n = 0;
-        while (n<size) {
+        while (n < size) {
             Account account = database.getAccount(list.get(n).getAccountID());
             account.setFreeze(f);
             database.updateAccount(account);
@@ -171,19 +170,19 @@ public class Bank {
         return database.updateClient(client);
     }
 
-    public boolean addLoan(int ammount, int interest, int accountID){
+    public boolean addLoan(int ammount, int interest, int accountID) {
         Account acc = database.getAccount(accountID);
         acc.addLoan(ammount, interest);
         return database.updateAccount(acc);
     }
 
     public boolean payLoan(int cID, int lID, double payment) {
-    	Client c = database.getClient(cID);
-	if(!c.LoanPayment(lID, payment)) return false;
-	return database.updateClient(c);
+        Client c = database.getClient(cID);
+        if (!c.LoanPayment(lID, payment)) return false;
+        return database.updateClient(c);
     }
 
-    public double calculateInterestOnLoan(int accountID, int loanID){
+    public double calculateInterestOnLoan(int accountID, int loanID) {
         Account acc = database.getAccount(accountID);
         Loan toCalc = acc.getLoanFromID(loanID);
 
@@ -191,20 +190,20 @@ public class Bank {
     }
 
     public double calculateFees(int cID) {
-    	Client c = database.getClient(cID);
-	ArrayList<Integer> accL = c.getAccounts();
-	int i = 0;
-	double total = 0.0;
-	Account a;
-	while(i < accL.size()) {
-		a = database.getAccount(accL.get(i));
-		total += a.calculatePayments();
-		i++;
-	}
-	return total;
+        Client c = database.getClient(cID);
+        List<Account> accL = c.getAccounts();
+        int i = 0;
+        double total = 0.0;
+        Account a;
+        while (i < accL.size()) {
+            a = database.getAccount(accL.get(i).getAccountID());
+            total += a.calculatePayments();
+            i++;
+        }
+        return total;
     }
 
-    public boolean transferAccount(int clientID1, int clientID2, int accID){
+    public boolean transferAccount(int clientID1, int clientID2, int accID) {
         Client toTransferFrom = database.getClient(clientID1);
 
         return toTransferFrom.transferAccount(accID, clientID2);

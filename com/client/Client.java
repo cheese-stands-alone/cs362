@@ -1,7 +1,6 @@
 package com.client;
 
 import com.account.Account;
-import com.account.Loan;
 import com.db.Database;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class Client {
         Random random = new Random();
         clientID = random.nextInt();
         accountList = new ArrayList<Integer>();
-	freezeStatus = false;
+        freezeStatus = false;
         db = data;
     }
 
@@ -29,7 +28,7 @@ public class Client {
         Random random = new Random();
         clientID = random.nextInt();
         accountList = new ArrayList<Integer>();
-	    freezeStatus = false;
+        freezeStatus = false;
     }
 
     public int getClientID() {
@@ -37,18 +36,18 @@ public class Client {
     }
 
     public boolean attachAccount(Account account) {
-        if(freezeStatus) return false;
+        if (freezeStatus) return false;
         accountList.add(Integer.valueOf(account.getAccountID()));
         return true;
     }
 
     public List<Account> getAccounts() {
-    	List<Account> accounts = new ArrayList<Account>();
-	for(int i = 0; i < accountList.size(); i++) {
-		Account a = db.getAccount(accountList.get(i).intValue());
-		accounts.add(a);
-	}
-	return accounts;
+        List<Account> accounts = new ArrayList<Account>();
+        for (int i = 0; i < accountList.size(); i++) {
+            Account a = db.getAccount(accountList.get(i).intValue());
+            accounts.add(a);
+        }
+        return accounts;
     }
 
     public boolean containsAccounts() {
@@ -56,21 +55,21 @@ public class Client {
     }
 
     public boolean removeAccount(Account account) {
-        if(freezeStatus) return false;
+        if (freezeStatus) return false;
         accountList.remove(account.getAccountID());
         return true;
     }
 
     public boolean toogleFreezeStatus() {
-    	freezeStatus = !freezeStatus;
-	return true;
+        freezeStatus = !freezeStatus;
+        return true;
     }
 
     public boolean getFreezeStatus() {
-    	return freezeStatus;
+        return freezeStatus;
     }
 
-    public boolean transferAccount(int accID, int clientIDtoTransferTo){
+    public boolean transferAccount(int accID, int clientIDtoTransferTo) {
         Client toTransferTo = db.getClient(clientIDtoTransferTo);
         Account acc = db.getAccount(accID);
         removeAccount(acc);
@@ -79,10 +78,12 @@ public class Client {
         return true;
     }
 
+    /*
     public boolean LoanPayment(int lID, double payment) {
     	Loan l = getLoanByID(lID);
 	if(!l.receivePayment(payment)) return false;
 	if(l.getLoanAmount() == 0) LoanList.remove(l);
 	return true;
     }
+    */
 }
