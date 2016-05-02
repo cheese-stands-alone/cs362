@@ -1,7 +1,5 @@
 package com.account;
 
-import com.account.RecurringPayment;
-
 import com.client.Client;
 import com.db.Database;
 
@@ -40,6 +38,7 @@ public class Account {
         loanList = new ArrayList<Loan>();
         rpList = new ArrayList<RecurringPayment>();
         freezeStatus = false;
+        interest = 1;
     }
 
     public double getBalance() {
@@ -79,11 +78,11 @@ public class Account {
 
     public boolean addRecurringPayment(double amount, int aID) {
         if (freezeStatus) return false;
-	int size = rpList.size();
-	int i = 0;
-	if (size > 0) i = rpList.get(size - 1).getID();
-	i++;
-	RecurringPayment r = new RecurringPayment(aID, amount, i);
+        int size = rpList.size();
+        int i = 0;
+        if (size > 0) i = rpList.get(size - 1).getID();
+        i++;
+        RecurringPayment r = new RecurringPayment(aID, amount, i);
         rpList.add(r);
         return true;
     }
@@ -94,7 +93,7 @@ public class Account {
         int n = 0;
         int ID = 0;
         boolean done = false;
-        while (n<s && !done){
+        while (n < s && !done) {
             ID = rpList.get(n).getID();
             if (ID == rpID) {
                 rpList.remove(n);
@@ -108,13 +107,13 @@ public class Account {
     }
 
     public double calculatePayments() {
-    	int i = 0;
-	int sum = 0.0;
-	while(i < rpList.size()) {
-		sum += rpList.get(i).getPayment();
-		i++;
-	}
-	return sum;
+        int i = 0;
+        int sum = 0;
+        while (i < rpList.size()) {
+            sum += rpList.get(i).getPayment();
+            i++;
+        }
+        return sum;
     }
 
     public int issueDebitCard() {
@@ -158,16 +157,16 @@ public class Account {
         return true;
     }
 
-    public boolean addLoan(int amount, int rate){
+    public boolean addLoan(int amount, int rate) {
         Loan toAdd = new Loan(amount, rate);
         loanList.add(toAdd);
         return true;
     }
 
-    public Loan getLoanFromID(int loanID){
-        for(int i = 0; i < loanList.size(); i++){
+    public Loan getLoanFromID(int loanID) {
+        for (int i = 0; i < loanList.size(); i++) {
             Loan temp = loanList.get(i);
-            if(temp.getLoanID() == loanID) return temp;
+            if (temp.getLoanID() == loanID) return temp;
         }
         return null;
     }

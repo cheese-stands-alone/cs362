@@ -14,6 +14,28 @@ public class Database {
         clientlist = new HashMap<Integer, Client>();
     }
 
+    public String listClinets() {
+        StringBuilder sb = new StringBuilder();
+        for (Integer i : clientlist.keySet()) {
+            sb.append("Client ");
+            sb.append(clientlist.get(i).name);
+            sb.append(" ");
+            sb.append('\n');
+        }
+        return sb.toString();
+    }
+
+    public String listAccounts() {
+        StringBuilder sb = new StringBuilder();
+        for (Integer i : accountlist.keySet()) {
+            sb.append("Account ");
+            sb.append(accountlist.get(i).toString());
+            sb.append(" ");
+            sb.append('\n');
+        }
+        return sb.toString();
+    }
+
     public boolean putAccount(Account account) {
         if (accountlist.containsKey(account.getAccountID())) {
             return false;

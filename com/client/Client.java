@@ -1,6 +1,7 @@
 package com.client;
 
 import com.account.Account;
+import com.account.Loan;
 import com.db.Database;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Client {
-    private String name;
+    public String name;
     private int clientID;
     private List<Integer> accountList;
     private boolean freezeStatus;
