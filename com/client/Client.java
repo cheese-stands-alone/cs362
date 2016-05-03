@@ -12,7 +12,7 @@ public class Client {
     private int clientID;
     private List<Integer> accountList;
     private boolean freezeStatus;
-    private Database db;
+   /* private Database db;
 
     public Client(Database data) {
         name = "";
@@ -21,12 +21,13 @@ public class Client {
         accountList = new ArrayList<Integer>();
         freezeStatus = false;
         db = data;
-    }
+    }*/
 
     public Client(String name) {
         this.name = name;
         Random random = new Random();
         clientID = random.nextInt();
+	System.out.println("\n  Client ID: " + clientID + '\n');
         accountList = new ArrayList<Integer>();
         freezeStatus = false;
     }
@@ -41,13 +42,13 @@ public class Client {
         return true;
     }
 
-    public List<Account> getAccounts() {
-        List<Account> accounts = new ArrayList<Account>();
+    public List<Integer> getAccounts() {
+       /* List<Account> accounts = new ArrayList<Account>();
         for (int i = 0; i < accountList.size(); i++) {
             Account a = db.getAccount(accountList.get(i).intValue());
             accounts.add(a);
-        }
-        return accounts;
+        }*/
+        return accountList;
     }
 
     public boolean containsAccounts() {
@@ -69,7 +70,7 @@ public class Client {
         return freezeStatus;
     }
 
-    public boolean transferAccount(int accID, int clientIDtoTransferTo) {
+    public boolean transferAccount(int accID, int clientIDtoTransferTo, Database db) {
         Client toTransferTo = db.getClient(clientIDtoTransferTo);
         Account acc = db.getAccount(accID);
         removeAccount(acc);
@@ -78,12 +79,4 @@ public class Client {
         return true;
     }
 
-    /*
-    public boolean LoanPayment(int lID, double payment) {
-    	Loan l = getLoanByID(lID);
-	if(!l.receivePayment(payment)) return false;
-	if(l.getLoanAmount() == 0) LoanList.remove(l);
-	return true;
-    }
-    */
 }

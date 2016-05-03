@@ -14,12 +14,13 @@ public class Database {
         clientlist = new HashMap<Integer, Client>();
     }
 
-    public String listClinets() {
+    public String listClients() {
         StringBuilder sb = new StringBuilder();
         for (Integer i : clientlist.keySet()) {
-            sb.append("Client ");
+            sb.append("Client: ");
             sb.append(clientlist.get(i).name);
-            sb.append(" ");
+            sb.append("  ID: ");
+	    sb.append(clientlist.get(i).getClientID())
             sb.append('\n');
         }
         return sb.toString();
@@ -28,8 +29,8 @@ public class Database {
     public String listAccounts() {
         StringBuilder sb = new StringBuilder();
         for (Integer i : accountlist.keySet()) {
-            sb.append("Account ");
-            sb.append(accountlist.get(i).toString());
+            sb.append("Account ID: ");
+            sb.append(accountlist.get(i).getAccountID());
             sb.append(" ");
             sb.append('\n');
         }

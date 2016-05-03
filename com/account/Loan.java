@@ -26,4 +26,20 @@ public class Loan {
         return loanID;
     }
 
+    public double getLoanAmount(){
+	return loanAmount;
+    }
+
+    public boolean receivePayment(double payment){
+	if(payment >= loanAmount) {
+		if(payment > loanAmount) {
+			double over = payment - loanAmount;
+			System.out.println(over + " was returned, since payment was over remaining loan amount");
+		}
+		loanAmount = 0.0;
+	}
+	else loanAmount -= payment;
+	return true;
+    }
+
 }

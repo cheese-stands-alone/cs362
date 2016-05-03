@@ -8,7 +8,7 @@ public class Run {
         Scanner input = new Scanner(System.in);
         Bank bank = new Bank();
         Integer i,x,c;
-        Double d;
+        Double d, e;
         while(true) {
             try {
                 String s = input.nextLine();
@@ -19,7 +19,7 @@ public class Run {
                         System.out.println(bank.database.listAccounts());
                         break;
                     case "listClients":
-                        System.out.println(bank.database.listClinets());
+                        System.out.println(bank.database.listClients());
                         break;
                     case "addAccount":
                         System.out.println("Input ClientID");
@@ -152,6 +152,18 @@ public class Run {
                         d = Double.parseDouble(s);
                         bank.withdrawFunds(i, d);
                         break;
+		    case "addLoan":
+		    	System.out.println("Input AccountID");
+			s = input.nextLine();
+			i = Integer.parseInt(s);
+			System.out.println("Input loan amount");
+			s = input.nextLine();
+			d = Double.parseDouble(s);
+			System.out.println("Input interest rate");
+			s = input.nextLine();
+			e = Double.parseDouble(s);
+			bank.addLoan(d, e, i);
+			break;
                 }
             } catch (Exception e) {
                 System.out.println("Error in input");

@@ -170,16 +170,16 @@ public class Bank {
         return database.updateClient(client);
     }
 
-    public boolean addLoan(int ammount, int interest, int accountID) {
+    public boolean addLoan(double amount, double interest, int accountID) {
         Account acc = database.getAccount(accountID);
-        acc.addLoan(ammount, interest);
+        acc.addLoan(amount, interest);
         return database.updateAccount(acc);
     }
 
-    public boolean payLoan(int cID, int lID, double payment) {
-        Client c = database.getClient(cID);
-       // if (!c.LoanPayment(lID, payment)) return false;
-        return database.updateClient(c);
+    public boolean payLoan(int aID, int lID, double payment) {
+        Account a = database.getAccount(aID);
+        if (!a.loanPayment(lID, payment)) return false;
+        return database.updateAccount(a);
     }
 
     public double calculateInterestOnLoan(int accountID, int loanID) {

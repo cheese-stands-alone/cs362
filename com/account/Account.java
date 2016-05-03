@@ -16,7 +16,7 @@ public class Account {
     private boolean freezeStatus;
     private int pin;
     private double interest;
-    private Database db;
+   /* private Database db;
 
     public Account(double balance, Database data) {
         Balance = balance;
@@ -29,11 +29,12 @@ public class Account {
         interest = 1.01;
         db = data;
     }
-
+*/
     public Account() {
         Balance = 0.0;
         Random random = new Random();
         accountID = random.nextInt();
+	System.out.println("\n  Account ID: " + accountID + "\n");
         clientList = new ArrayList<Integer>();
         loanList = new ArrayList<Loan>();
         rpList = new ArrayList<RecurringPayment>();
@@ -55,13 +56,13 @@ public class Account {
         return true;
     }
 
-    public List<Client> getClientList() {
-        List<Client> clients = new ArrayList<Client>();
+    public List<Integer> getClientList() {
+       /* List<Client> clients = new ArrayList<Client>();
         for (int i = 0; i < clientList.size(); i++) {
             Client c = db.getClient(clientList.get(i));
             clients.add(c);
-        }
-        return clients;
+        }*/
+        return clientList;
     }
 
     public boolean deposit(double ammount) {
@@ -157,7 +158,7 @@ public class Account {
         return true;
     }
 
-    public boolean addLoan(int amount, int rate) {
+    public boolean addLoan(double amount, double rate) {
         Loan toAdd = new Loan(amount, rate);
         loanList.add(toAdd);
         return true;
@@ -171,5 +172,11 @@ public class Account {
         return null;
     }
 
+    public boolean loanPayment(int lID, double payment) {
+    	Loan l = this.getLoanFromID(lID);
+	if(!l.receivePayment(payment)) return false;
+	else if(l.getLoanAmount() <= 0.0) LoanList.remove(l);
+	return true;
+    }
 
 }
