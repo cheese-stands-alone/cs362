@@ -57,11 +57,7 @@ public class Database {
     }
 
     public boolean updateAccount(Account account) {
-        if (accountlist.containsKey(account.getAccountID())) {
-            accountlist.put(account.getAccountID(), account);
-            return true;
-        }
-        return false;
+        return true;
     }
 
     public boolean putClient(Client client) {
@@ -81,11 +77,7 @@ public class Database {
     }
 
     public boolean updateClient(Client client) {
-        if (clientlist.containsKey(client.getClientID())) {
-            clientlist.put(client.getClientID(), client);
-            return true;
-        }
-        return false;
+        return true;
     }
 
     public Client getClient(int clientID) {

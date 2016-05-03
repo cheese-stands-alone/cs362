@@ -178,7 +178,7 @@ public class Bank {
 
     public boolean payLoan(int cID, int lID, double payment) {
         Client c = database.getClient(cID);
-        if (!c.LoanPayment(lID, payment)) return false;
+       // if (!c.LoanPayment(lID, payment)) return false;
         return database.updateClient(c);
     }
 
