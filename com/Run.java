@@ -152,7 +152,7 @@ public class Run {
                         d = Double.parseDouble(s);
                         bank.withdrawFunds(i, d);
                         break;
-		    case "addLoan":
+		   /* case "addLoan":
 		    	System.out.println("Input AccountID");
 			s = input.nextLine();
 			i = Integer.parseInt(s);
@@ -163,7 +163,7 @@ public class Run {
 			s = input.nextLine();
 			e = Double.parseDouble(s);
 			bank.addLoan(d, e, i);
-			break;
+			break;*/
                 }
             } catch (Exception e) {
                 System.out.println("Error in input");
