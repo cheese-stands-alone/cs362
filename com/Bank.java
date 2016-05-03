@@ -182,6 +182,11 @@ public class Bank {
         return database.updateAccount(a);
     }
 
+    public List<Loan> viewLoans(int aID) {
+    	Account a = database.getAccount(aID);
+	return a.getLoans();
+    }
+
     public double calculateInterestOnLoan(int accountID, int loanID) {
         Account acc = database.getAccount(accountID);
         Loan toCalc = acc.getLoanFromID(loanID);

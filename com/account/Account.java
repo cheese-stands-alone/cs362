@@ -50,6 +50,10 @@ public class Account {
         return accountID;
     }
 
+    public List<Loan> getLoans() {
+	return loanList;
+    }
+
     public boolean addClient(Client client) {
         if (freezeStatus) return false;
         clientList.add(client.getClientID());
