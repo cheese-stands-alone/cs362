@@ -4,6 +4,7 @@ import java.util.Random;
 
 /**
  * Created by Zakk on 4/28/2016.
+ * Updated by Austin on 5/3/2016.
  */
 public class Loan {
     public int loanID;
@@ -15,6 +16,7 @@ public class Loan {
         loanInterest = rate;
         loanAmount = ammount;
         loanID = Math.abs(random.nextInt());
+	System.out.println("\n  Loan ID: " + loanID + '\n');
     }
 
     public double calculateIntrestOnLoan(){

@@ -1,6 +1,9 @@
 package com;
 
 import java.util.Scanner;
+import java.util.List;
+
+import com.client.Loan;
 
 public class Run {
 
@@ -152,7 +155,7 @@ public class Run {
                         d = Double.parseDouble(s);
                         bank.withdrawFunds(i, d);
                         break;
-		   /* case "addLoan":
+		    case "addLoan":
 		    	System.out.println("Input AccountID");
 			s = input.nextLine();
 			i = Integer.parseInt(s);
@@ -163,7 +166,37 @@ public class Run {
 			s = input.nextLine();
 			e = Double.parseDouble(s);
 			bank.addLoan(d, e, i);
-			break;*/
+			break;
+		    case "payLoan":
+		    	System.out.println("Input ClientID");
+			s = input.nextLine();
+			i = Integer.parseInt(s);
+			System.out.println("Input LoanID");
+			s = input.nextLine();
+			x = Integer.parseInt(s);
+			System.out.println("Input payment amount");
+			s = input.nextLine();
+			d = Double.parseDouble(s);
+			bank.payLoan(i, x, d);
+			break;
+		    case "viewLoans":
+		    	System.out.println("Input ClientID");
+			s = input.nextLine();
+			i = Integer.parseInt(s);
+			List<Loan> loans = bank.viewLoans(i);
+			for (Loan l : loans) {
+				System.out.println("LoanID: " + l.getLoanID() + "  Amount: " + l.getLoanAmount());
+			}
+			break;
+		    case "calculateInterestOnLoan":
+		    	System.out.println("Input ClientID");
+			s = input.nextLine();
+			i = Integer.parseInt(s);
+			System.out.println("Input LoanID");
+			s = input.nextLine();
+			x = Integer.parseInt(s);
+			bank.calculateInterestOnLoan(i, s);
+			break;
                 }
             } catch (Exception e) {
                 System.out.println("Error in input");

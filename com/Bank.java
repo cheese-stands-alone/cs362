@@ -1,11 +1,13 @@
 package com;
 
 import com.account.Account;
-import com.account.Loan;
+import com.client.Loan;
+import com.account.RecurringPayment
 import com.client.Client;
 import com.db.Database;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Bank {
     Database database;
@@ -141,9 +143,15 @@ public class Bank {
 
     public Statement getStatement(int clientID) {
         Client client = database.getClient(clientID);
-        List<Account> list = client.getAccounts();
+        List<Integer> list = client.getAccounts();
+        List<Account> accounts = new ArrayList<Account>();
+        for (Integer i : list) {
+            Account a = db.getAccount(list.get(i));
+            accounts.add(a);
+        }
+
         Statement statement = new Statement();
-        for (Account account : list) {
+        for (Account account : accounts) {
             statement.addAccount(account);
         }
         return statement;
@@ -159,49 +167,49 @@ public class Bank {
         Client client = database.getClient(clientID);
         client.toogleFreezeStatus();
         boolean f = client.getFreezeStatus();
-        List<Account> list = client.getAccounts();
+        List<Integer> list = client.getAccounts();
         int size = list.size();
         int n = 0;
         while (n < size) {
-            Account account = database.getAccount(list.get(n).getAccountID());
+            Account account = database.getAccount(list.get(n));
             account.setFreeze(f);
             database.updateAccount(account);
         }
         return database.updateClient(client);
     }
 
-    public boolean addLoan(double amount, double interest, int accountID) {
-        Account acc = database.getAccount(accountID);
-        acc.addLoan(amount, interest);
-        return database.updateAccount(acc);
+    public boolean addLoan(double amount, double interest, int clientID) {
+        Client c = database.getClient(clientID);
+        c.addLoan(amount, interest);
+        return database.updateClient(c);
     }
 
-    public boolean payLoan(int aID, int lID, double payment) {
-        Account a = database.getAccount(aID);
-        if (!a.loanPayment(lID, payment)) return false;
-        return database.updateAccount(a);
+    public boolean payLoan(int cID, int lID, double payment) {
+        Client c = database.getClient(cID);
+        if (!c.loanPayment(lID, payment)) return false;
+        return database.updateClient(c);
     }
 
-    public List<Loan> viewLoans(int aID) {
-    	Account a = database.getAccount(aID);
-	return a.getLoans();
+    public List<Loan> viewLoans(int cID) {
+    	Client c = database.getClient(cID);
+	return c.getLoans();
     }
 
-    public double calculateInterestOnLoan(int accountID, int loanID) {
-        Account acc = database.getAccount(accountID);
-        Loan toCalc = acc.getLoanFromID(loanID);
+    public double calculateInterestOnLoan(int clientID, int loanID) {
+        Client c = database.getClient(clientID);
+        Loan toCalc = c.getLoanFromID(loanID);
 
         return toCalc.calculateIntrestOnLoan();
     }
 
     public double calculateFees(int cID) {
         Client c = database.getClient(cID);
-        List<Account> accL = c.getAccounts();
+        List<Integer> accL = c.getAccounts();
         int i = 0;
         double total = 0.0;
         Account a;
         while (i < accL.size()) {
-            a = database.getAccount(accL.get(i).getAccountID());
+            a = database.getAccount(accL.get(i));
             total += a.calculatePayments();
             i++;
         }
@@ -211,7 +219,7 @@ public class Bank {
     public boolean transferAccount(int clientID1, int clientID2, int accID) {
         Client toTransferFrom = database.getClient(clientID1);
 
-        return toTransferFrom.transferAccount(accID, clientID2);
+        return toTransferFrom.transferAccount(accID, clientID2, database);
     }
 
 }
